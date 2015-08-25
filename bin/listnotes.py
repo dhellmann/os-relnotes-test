@@ -21,6 +21,10 @@ notesdir = os.path.join(relnotesdir, 'notes')
 
 files_and_tags = collections.OrderedDict()
 
+# Determine the current version, which might be an unreleased or dev
+# version.
+current_version = subprocess.check_output(['git', 'describe', '--tags']).strip()
+
 # FIXME(dhellmann): This might need to be more line-oriented in the
 # production script.
 history_results = subprocess.check_output(
@@ -38,7 +42,7 @@ for i, h in enumerate(history):
     print(tags)
     filenames = hlines[2:]
     if not tags:
-        tags = ['untagged']
+        tags = [current_version]
     for t in tags:
         files_and_tags.setdefault(t, []).extend(filenames)
     print(filenames)
