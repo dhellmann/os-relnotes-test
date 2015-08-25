@@ -31,6 +31,7 @@ history_results = subprocess.check_output(
     ['git', 'log', '--pretty=%x00%H %d', '--name-only', notesdir],
 )
 history = history_results.split('\x00')
+previous_version = current_version
 for i, h in enumerate(history):
     h = h.strip()
     if not h:
@@ -42,7 +43,9 @@ for i, h in enumerate(history):
     print(tags)
     filenames = hlines[2:]
     if not tags:
-        tags = [current_version]
+        tags = [previous_version]
+    else:
+        previous_version = tags[0]
     for t in tags:
         files_and_tags.setdefault(t, []).extend(filenames)
     print(filenames)
