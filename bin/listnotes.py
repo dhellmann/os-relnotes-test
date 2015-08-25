@@ -6,6 +6,8 @@ from __future__ import print_function
 
 import argparse
 import collections
+import itertools
+import glob
 import os
 import re
 import subprocess
@@ -56,14 +58,23 @@ for i, h in enumerate(history):
     for f in filenames:
         # Updated as older tags are found, handling edits to release
         # notes.
-        earliest_seen[f] = tags[0]
+        prefix = os.path.basename(f)[:36]
+        print(prefix, tags[0])
+        if prefix in earliest_seen:
+            print('updating to', tags[0])
+        earliest_seen[prefix] = tags[0]
 
 # Invert earliest_seen to make a list for each version.
 files_and_tags = collections.OrderedDict()
 for v in versions:
     files_and_tags[v] = []
-for filename, version in earliest_seen.items():
-    files_and_tags[version].append(filename)
+for prefix, version in earliest_seen.items():
+    files_and_tags[version].append(prefix)
 
-for t, filenames in files_and_tags.items():
+print()
+for t, prefixes in files_and_tags.items():
+    filenames = list(itertools.chain(*(
+        glob.glob(os.path.join(notesdir, p + '*.yaml'))
+        for p in prefixes
+    )))
     print(t, filenames)
