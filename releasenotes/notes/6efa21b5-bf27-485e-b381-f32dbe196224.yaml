@@ -1,5 +1,5 @@
 ---
 prelude: >
-    This is the first release note.
+    This is the first release note, but it was changed in an unreleased commit.
 other:
   - This release note comes first.
