@@ -1,0 +1,9 @@
+---
+prelude: >
+    Replace this text.
+critical:
+  - Add critical notes here, or remove this section.
+security:
+  - Add security notes here, or remove this section.
+other:
+  - Add other notes here, or remove this section.
