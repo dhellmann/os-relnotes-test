@@ -1,0 +1,5 @@
+---
+prelude: >
+    This is the second node.
+critical:
+  - Note number 2.
